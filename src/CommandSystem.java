@@ -15,8 +15,8 @@ public class CommandSystem {
 		case "showteams":
 			
 			break;
-		case "showcommands":
-			
+		case "help":
+			showCommands();
 		default:
 			System.out.println("The string entered is not a valid command.");
 		}
