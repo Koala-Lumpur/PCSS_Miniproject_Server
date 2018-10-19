@@ -25,6 +25,7 @@ public class CommandSystem {
 	public static void showCommands() {
 		System.out.println("These are the valid server commands. Be aware that it is case-sensitive.");
 		System.out.println("showplayers - Shows the players connected to the game.");
+		System.out.println("help - Shows the commands for the game.");
 		System.out.println("start - Starts the game.");
 		System.out.println("close - Closes the server.\n");
 	}
