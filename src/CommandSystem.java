@@ -7,7 +7,7 @@ public class CommandSystem {
 			
 			break;
 		case "close":
-			
+			close();
 			break;
 		case "showplayers":
 			showPlayers();
@@ -41,5 +41,12 @@ public class CommandSystem {
 		} else {
 			System.out.println("No players are connected\n");
 		}
+	}
+	
+	
+	public static void close() {
+		System.out.println("Closing the game");
+		System.exit(0); 
+		
 	}
 }
