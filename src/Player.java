@@ -3,6 +3,7 @@ public class Player {
 	private String playerName;
 	private String playerClass;
 	private int currentHealth;
+	private String playerTeam;
 	
 	public Player(String playerName, String playerClass, int currentHealth) {
 		this.playerName = playerName;
@@ -34,4 +35,11 @@ public class Player {
 		return playerClass;
 	}
 	
+	public void setPlayerTeam(String s) {
+		playerTeam = s;
+	}
+	
+	public String getPLayerTeam() {
+		return playerTeam;
+	}
 }

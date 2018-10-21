@@ -15,6 +15,7 @@ public class Server implements Runnable {
 	public static ArrayList<Player> player = new ArrayList<Player>();
 	public static ServerSocket serverSocket;
 	public static int numberOfPlayers = 0;
+	public static int numberOfPlayersOnTeam = 0;
 	public static DataOutputStream out;
 	public Scanner input = new Scanner(System.in);
 	public Thread thread;
@@ -69,6 +70,7 @@ public class Server implements Runnable {
 	
 	//Writes a message to each client that has connected to the server
 	public static void writeMessage(String message) throws IOException {
+		System.out.println(message);
 		for(int i = 0; i < numberOfPlayers; i++) {
 			Socket output = clients.get(i);
 			out = new DataOutputStream(output.getOutputStream());
@@ -82,6 +84,7 @@ class RunClient implements Runnable {
 	
 	private Socket socket; 
 	String playerName;
+	String playerTeam;
 	int playerHealth = 15;
 	String playerClass = "Warrior";
 	
@@ -95,14 +98,23 @@ class RunClient implements Runnable {
 			DataInputStream in = new DataInputStream(socket.getInputStream());
 			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 			
-			//Reads the name the players entered
+			//Reads the name and class the players entered and chose
 			playerName = in.readLine();
+			playerClass = in.readLine();
+
 			//Adds that name to a "database"
 			Server.player.add(new Player(playerName, playerClass, playerHealth));
 			
 			//Prints out the name if the player that connected as well as send that information to each player
-			System.out.println("Player " + Server.player.get(Server.numberOfPlayers-1).getPlayerName() + " has joined the server");
-			Server.writeMessage("Player " + Server.player.get(Server.numberOfPlayers-1).getPlayerName() + " has joined the server");
+			Server.writeMessage(Server.player.get(Server.numberOfPlayers-1).getPlayerClass() + " " + 
+					Server.player.get(Server.numberOfPlayers-1).getPlayerName() + " has joined the server");
+			//Gets and prints the joined teams
+			playerTeam = in.readLine();
+			Server.player.get(Server.numberOfPlayersOnTeam).setPlayerTeam(playerTeam);
+			Server.writeMessage(Server.player.get(Server.numberOfPlayersOnTeam).getPlayerName() + 
+					" has joined " + playerTeam);
+			Server.numberOfPlayersOnTeam++;
+			
 			
 		} catch (IOException e) {}
 		

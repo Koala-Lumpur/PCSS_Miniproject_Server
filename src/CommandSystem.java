@@ -24,17 +24,19 @@ public class CommandSystem {
 	
 	public static void showCommands() {
 		System.out.println("These are the valid server commands. Be aware that it is case-sensitive.");
-		System.out.println("showplayers - Shows the players connected to the game.");
+		System.out.println("showplayers - Shows the players connected to the game, what class they are and their team.");
 		System.out.println("help - Shows the commands for the game.");
 		System.out.println("start - Starts the game.");
 		System.out.println("close - Closes the server.\n");
 	}
 	
 	public static void showPlayers() {
-		if(Server.numberOfPlayers > 0) {
-			System.out.println("Player list: ");
-			for(int i = 0; i < Server.numberOfPlayers; i++) {
-				System.out.println(i+1 + " - " + Server.player.get(i).getPlayerName() + "\n");
+		if(Server.numberOfPlayersOnTeam > 0) {
+			System.out.println("–––Team list–––");
+			for(int i = 0; i < Server.numberOfPlayersOnTeam; i++) {
+				System.out.println(i+1 + " - Player name: " + Server.player.get(i).getPlayerName() 
+						+ " - Class: " + Server.player.get(i).getPlayerClass() 
+						+ " - " + Server.player.get(i).getPLayerTeam() + "\n");
 			}
 		} else {
 			System.out.println("No players are connected\n");
