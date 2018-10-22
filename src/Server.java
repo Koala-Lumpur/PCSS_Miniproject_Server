@@ -20,6 +20,7 @@ public class Server implements Runnable {
 	public static ServerSocket serverSocket;
 	public static int numberOfPlayers = 0;
 	public static int numberOfPlayersOnTeam = 0;
+	public static int numberOfPlayersReady = 0;
 	public static DataOutputStream out;
 	public Scanner input = new Scanner(System.in);
 	public Thread thread;
@@ -126,7 +127,9 @@ class RunClient implements Runnable {
 			
 			Server.numberOfPlayersOnTeam++;
 			
-			in.readBoolean();
+			boolean ready = in.readBoolean();
+			Server.player.get(Server.numberOfPlayersReady).setPlayerReady(ready);
+			Server.numberOfPlayersReady++;
 			
 			} catch (IOException e) {
 		}		
