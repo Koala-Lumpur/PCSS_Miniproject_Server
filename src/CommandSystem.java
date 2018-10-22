@@ -47,7 +47,7 @@ public class CommandSystem {
 	
 	
 	public static void close() {
-		System.out.println("Closing the game");
+		Server.writeMessage("Closing the game!");
 		System.exit(0); 
 		
 	}
