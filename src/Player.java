@@ -4,6 +4,7 @@ public class Player {
 	private String playerClass;
 	private int currentHealth;
 	private String playerTeam;
+	private boolean playerReady = false;
 	
 	public Player(String playerName, String playerClass, int currentHealth) {
 		this.playerName = playerName;
@@ -41,5 +42,13 @@ public class Player {
 	
 	public String getPLayerTeam() {
 		return playerTeam;
+	}
+
+	public boolean isPlayerReady() {
+		return playerReady;
+	}
+
+	public void setPlayerReady(boolean playerReady) {
+		this.playerReady = playerReady;
 	}
 }

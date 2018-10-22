@@ -43,7 +43,7 @@ public class Server implements Runnable {
 			}
 		}catch(IOException e) {
 		      System.err.println(e);
-		      }
+			}
 		}
 	
 	public void run() {
@@ -80,7 +80,7 @@ public class Server implements Runnable {
 			Socket output = clients.get(i);
 			out = new DataOutputStream(output.getOutputStream());
 			out.writeBytes(message+"\n");
-		}
+			}
 		}
 			catch(IOException E) {
 				
@@ -126,9 +126,10 @@ class RunClient implements Runnable {
 			
 			Server.numberOfPlayersOnTeam++;
 			
+			in.readBoolean();
 			
-		} catch (IOException e) {}
-		
+			} catch (IOException e) {
+		}		
 	}
 }
 		
