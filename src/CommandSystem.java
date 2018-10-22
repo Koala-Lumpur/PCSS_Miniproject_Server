@@ -1,10 +1,12 @@
+import java.io.IOException;
+
 public class CommandSystem {
 
 	static void handleCommand(String s) {
 		
 		switch(s) {
 		case "start":
-			
+			start();
 			break;
 		case "close":
 			close();
@@ -49,4 +51,12 @@ public class CommandSystem {
 		System.exit(0); 
 		
 	}
+	
+	public static void start() {
+		
+		Server.gameStarted = true;
+		Server.writeMessage("The game have started");
+	}
+	
+	
 }

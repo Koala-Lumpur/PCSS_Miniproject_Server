@@ -9,6 +9,10 @@ import java.util.ArrayList;
 
 public class Server implements Runnable {
 	
+	
+	public static boolean gameStarted = false;
+	
+	
 	//ArrayList of sockets which keeps track of the clients connected
 	public static ArrayList<Socket> clients = new ArrayList<Socket>();
 	//ArrayList of players which has important info about each player
@@ -69,16 +73,21 @@ public class Server implements Runnable {
 	}
 	
 	//Writes a message to each client that has connected to the server
-	public static void writeMessage(String message) throws IOException {
+	public static void writeMessage(String message)  {
+		try {
 		System.out.println(message);
 		for(int i = 0; i < numberOfPlayers; i++) {
 			Socket output = clients.get(i);
 			out = new DataOutputStream(output.getOutputStream());
 			out.writeBytes(message+"\n");
-			
+		}
+		}
+			catch(IOException E) {
+				
+			}
 		}
 	}
-}
+
 
 class RunClient implements Runnable {
 	
@@ -112,7 +121,9 @@ class RunClient implements Runnable {
 			playerTeam = in.readLine();
 			Server.player.get(Server.numberOfPlayersOnTeam).setPlayerTeam(playerTeam);
 			Server.writeMessage(Server.player.get(Server.numberOfPlayersOnTeam).getPlayerName() + 
-					" has joined " + playerTeam);
+					 " has joined the server and selected " + playerTeam + " and the " + Server.player.get(Server.numberOfPlayers-1).getPlayerClass() + 
+					 " class");
+			
 			Server.numberOfPlayersOnTeam++;
 			
 			
