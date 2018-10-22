@@ -130,7 +130,7 @@ class RunClient implements Runnable {
 			boolean ready = in.readBoolean();
 			Server.player.get(Server.numberOfPlayersReady).setPlayerReady(ready);
 			Server.numberOfPlayersReady++;
-			
+			Server.writeMessage(Server.player.get(Server.numberOfPlayersReady).getPlayerName() + " is ready");
 			} catch (IOException e) {
 		}		
 	}
