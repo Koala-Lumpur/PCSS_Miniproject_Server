@@ -51,8 +51,8 @@ class ClientThread implements Runnable {
 			Server.writeMessage(Server.player.get(index-1).getPlayerName() + " is ready");
 			
 			try { 
-			if(Server.player.get(0).isPlayerReady() && Server.player.get(1).isPlayerReady() &&
-					Server.player.get(2).isPlayerReady() && Server.player.get(3).isPlayerReady()) {
+			if(Server.player.get(0).isPlayerReady() /*&& Server.player.get(1).isPlayerReady() &&
+					Server.player.get(2).isPlayerReady() && Server.player.get(3).isPlayerReady()*/) {
 				Server.gameStarted = true; 
 				Server.writeMessage("Game is starting!");
 			} 
@@ -61,14 +61,17 @@ class ClientThread implements Runnable {
 			}
 			
 			while (Server.gameStarted) {
-				for(int i = 5; i > 0; i-- ) {
-					Server.writeMessage("Game is starting in... " + i);
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						
+				boolean clientGameStarted = false;
+				if(!clientGameStarted) {
+					for(int i = 5; i > 0; i-- ) {
+						Server.writeMessage("Game is starting in... " + i);
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {}
 					}
 				}
+				clientGameStarted = true;
+				out.writeBoolean(clientGameStarted);
 			}
 			
 			} catch (IOException e) {
