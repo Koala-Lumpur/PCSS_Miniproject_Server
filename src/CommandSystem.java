@@ -34,11 +34,11 @@ public class CommandSystem {
 	
 	public static void showPlayers() {
 		if(Server.numberOfPlayersOnTeam > 0) {
-			System.out.println("---Team list---");
+			System.out.println("\n------Team list------");
 			for(int i = 0; i < Server.numberOfPlayersOnTeam; i++) {
 				System.out.println(i+1 + " - Player name: " + Server.player.get(i).getPlayerName() 
 						+ " - Class: " + Server.player.get(i).getPlayerClass() 
-						+ " - " + Server.player.get(i).getPLayerTeam() + "\n");
+						+ " - " + Server.player.get(i).getPLayerTeam());
 			}
 		} else {
 			System.out.println("No players are connected\n");

@@ -61,7 +61,14 @@ class ClientThread implements Runnable {
 			}
 			
 			while (Server.gameStarted) {
-				
+				for(int i = 5; i > 0; i-- ) {
+					Server.writeMessage("Game is starting in... " + i);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						
+					}
+				}
 			}
 			
 			} catch (IOException e) {
