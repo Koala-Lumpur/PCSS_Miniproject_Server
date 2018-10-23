@@ -50,6 +50,16 @@ class ClientThread implements Runnable {
 			Server.player.get(index-1).setPlayerReady(ready);
 			Server.writeMessage(Server.player.get(index-1).getPlayerName() + " is ready");
 			
+			try { 
+			if(Server.player.get(0).isPlayerReady() && Server.player.get(1).isPlayerReady() &&
+					Server.player.get(2).isPlayerReady() && Server.player.get(3).isPlayerReady()) {
+				Server.gameStarted = true; 
+				Server.writeMessage("Game is starting!");
+			} 
+			} catch (IndexOutOfBoundsException e) {
+				
+			}
+			
 			while (Server.gameStarted) {
 				
 			}
