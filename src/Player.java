@@ -12,7 +12,7 @@ public class Player {
 		this.currentHealth = currentHealth;
 	}
 	
-	public void setPLayerName(String s) {
+	public void setPlayerName(String s) {
 		playerName = s;
 	}
 	
@@ -24,7 +24,7 @@ public class Player {
 		currentHealth = i;
 	}
 	
-	public int getPLayerHealth() {
+	public int getPlayerHealth() {
 		return currentHealth;
 	}
 	
@@ -40,7 +40,7 @@ public class Player {
 		playerTeam = s;
 	}
 	
-	public String getPLayerTeam() {
+	public String getPlayerTeam() {
 		return playerTeam;
 	}
 

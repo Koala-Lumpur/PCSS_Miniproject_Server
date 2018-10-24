@@ -28,6 +28,7 @@ class ClientThread implements Runnable {
 			//Reads the name and class the players entered and chose
 			playerName = in.readLine();
 			playerClass = in.readLine();
+			playerHealth = in.readInt();
 
 			//Adds that name to a "database"
 			Server.player.add(new Player(playerName, playerClass, playerHealth));
@@ -61,18 +62,24 @@ class ClientThread implements Runnable {
 			}
 			
 			while (Server.gameStarted) {
-				boolean clientGameStarted = false;
-				if(!clientGameStarted) {
+				
 					for(int i = 5; i > 0; i-- ) {
 						Server.writeMessage("Game is starting in... " + i);
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e) {}
 					}
+					
+					for(int i = 0; i < 4; i++) {
+						out.writeBytes(Server.player.get(i).getPlayerName());
+						out.writeBytes(Server.player.get(i).getPlayerClass());
+						out.writeBytes( Server.player.get(i).getPlayerTeam());
+						out.writeInt(Server.player.get(i).getPlayerHealth());
+					}
+					
 				}
-				clientGameStarted = true;
-				out.writeBoolean(clientGameStarted);
-			}
+				
+			
 			
 			} catch (IOException e) {
 		}		
