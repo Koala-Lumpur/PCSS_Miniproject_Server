@@ -11,6 +11,7 @@ class ClientThread implements Runnable {
 	int playerHealth = 15;
 	String playerClass = "Warrior";
 	int index;
+	boolean clientGameStarted = false;
 	
 	public ClientThread (Socket socket) {
 		this.socket = socket; 
@@ -52,8 +53,8 @@ class ClientThread implements Runnable {
 			Server.writeMessage(Server.player.get(index-1).getPlayerName() + " is ready");
 			
 			try { 
-			if(Server.player.get(0).isPlayerReady() /*&& Server.player.get(1).isPlayerReady() &&
-					Server.player.get(2).isPlayerReady() && Server.player.get(3).isPlayerReady()*/) {
+			if(Server.player.get(0).isPlayerReady() && Server.player.get(1).isPlayerReady() &&
+					Server.player.get(2).isPlayerReady() && Server.player.get(3).isPlayerReady()) {
 				Server.gameStarted = true; 
 				Server.writeMessage("Game is starting!");
 			} 
@@ -62,19 +63,21 @@ class ClientThread implements Runnable {
 			}
 			
 			while (Server.gameStarted) {
-				
+				if(!clientGameStarted) {
 					for(int i = 5; i > 0; i-- ) {
 						Server.writeMessage("Game is starting in... " + i);
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e) {}
 					}
+					clientGameStarted = true;
+					}
 					
 					for(int i = 0; i < 4; i++) {
-						out.writeBytes(Server.player.get(i).getPlayerName());
-						out.writeBytes(Server.player.get(i).getPlayerClass());
-						out.writeBytes( Server.player.get(i).getPlayerTeam());
-						out.writeInt(Server.player.get(i).getPlayerHealth());
+						Server.writeMessage(Server.player.get(i).getPlayerName());
+						Server.writeMessage(Server.player.get(i).getPlayerClass());
+						Server.writeMessage( Server.player.get(i).getPlayerTeam());
+						Server.sendPlayerInfo(Server.player.get(i).getPlayerHealth());
 					}
 					
 				}

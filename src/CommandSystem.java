@@ -38,7 +38,7 @@ public class CommandSystem {
 			for(int i = 0; i < Server.numberOfPlayersOnTeam; i++) {
 				System.out.println(i+1 + " - Player name: " + Server.player.get(i).getPlayerName() 
 						+ " - Class: " + Server.player.get(i).getPlayerClass() 
-						+ " - " + Server.player.get(i).getPLayerTeam());
+						+ " - " + Server.player.get(i).getPlayerTeam());
 			}
 		} else {
 			System.out.println("No players are connected\n");

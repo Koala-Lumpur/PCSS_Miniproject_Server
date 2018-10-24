@@ -87,8 +87,16 @@ public class Server implements Runnable {
 		catch(IOException E) {
 		}
 	}
-}
-		
 	
-
-
+	public static void sendPlayerInfo(int message) {
+		try {
+			for(int i = 0; i < numberOfPlayers; i++) {
+				Socket output = clients.get(i);
+				out = new DataOutputStream(output.getOutputStream());
+				out.writeInt(message);
+				}
+			}
+			catch(IOException E) {
+			}
+	}
+}
