@@ -12,6 +12,7 @@ class ClientThread implements Runnable {
 	String playerClass = "Warrior";
 	int index;
 	boolean clientGameStarted = false;
+	boolean playerInfoSent = false; 
 	
 	public ClientThread (Socket socket) {
 		this.socket = socket; 
@@ -72,18 +73,18 @@ class ClientThread implements Runnable {
 					}
 					clientGameStarted = true;
 					}
-					
-					for(int i = 0; i < 4; i++) {
-						Server.writeMessage(Server.player.get(i).getPlayerName());
-						Server.writeMessage(Server.player.get(i).getPlayerClass());
-						Server.writeMessage( Server.player.get(i).getPlayerTeam());
-						Server.sendPlayerInfo(Server.player.get(i).getPlayerHealth());
-					}
-					
-				}
 				
-			
-			
+					if(!playerInfoSent) {	
+				
+						for(int i = 0; i < 4; i++) {
+							Server.writeMessage(Server.player.get(i).getPlayerName());
+							Server.writeMessage(Server.player.get(i).getPlayerClass());
+							Server.writeMessage( Server.player.get(i).getPlayerTeam());
+							Server.sendPlayerInfo(Server.player.get(i).getPlayerHealth());
+						}
+						playerInfoSent = true;  	
+					}
+				}
 			} catch (IOException e) {
 		}		
 	}
