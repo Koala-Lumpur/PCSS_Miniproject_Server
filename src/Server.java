@@ -19,6 +19,7 @@ public class Server implements Runnable {
 	public static ArrayList<Player> player = new ArrayList<Player>();
 	public static ServerSocket serverSocket;
 	public static int numberOfPlayers = 0;
+	public static int numberOfPlayersOnTeam = 0;
 	public static DataOutputStream out;
 	public Scanner input = new Scanner(System.in);
 	public Thread thread;

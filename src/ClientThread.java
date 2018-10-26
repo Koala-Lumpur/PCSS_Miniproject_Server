@@ -48,6 +48,8 @@ class ClientThread implements Runnable {
 					 " has joined the server and selected " + playerTeam + " and the " + Server.player.get(index-1).getPlayerClass() + 
 					 " class");
 			
+			Server.numberOfPlayersOnTeam++;
+			
 			index = in.readInt();
 			boolean ready = in.readBoolean();
 			Server.player.get(index-1).setPlayerReady(ready);
