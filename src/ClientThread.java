@@ -95,7 +95,8 @@ class ClientThread implements Runnable {
 							playerTarget = in.readInt();
 							damageDealt = in.readInt();
 							Server.player.get(playerTarget).setPlayerHealth(Server.player.get(playerTarget).getPlayerHealth() - damageDealt);
-							Server.writeMessage(Server.player.get(playerTarget).getPlayerName() + "Has taken " + damageDealt + " damage");
+							Server.writeMessage(Server.player.get(playerTarget).getPlayerName() + " Has taken " + damageDealt + " damage");
+							out.writeInt(playerTarget);
 							out.writeInt(Server.player.get(playerTarget).getPlayerHealth());
 							
 						}
