@@ -11,8 +11,10 @@ class ClientThread implements Runnable {
 	int playerHealth = 15;
 	String playerClass = "Warrior";
 	int index;
-	boolean clientGameStarted = false;
-	boolean playerInfoSent = false; 
+	boolean clientGameStarted;
+	boolean playerInfoSent; 
+	boolean waitForTurn;
+	
 	
 	public ClientThread (Socket socket) {
 		this.socket = socket; 
@@ -45,8 +47,6 @@ class ClientThread implements Runnable {
 			Server.writeMessage(Server.player.get(index-1).getPlayerName() + 
 					 " has joined the server and selected " + playerTeam + " and the " + Server.player.get(index-1).getPlayerClass() + 
 					 " class");
-			
-			Server.numberOfPlayersOnTeam++;
 			
 			index = in.readInt();
 			boolean ready = in.readBoolean();
@@ -83,6 +83,20 @@ class ClientThread implements Runnable {
 							Server.sendPlayerInfo(Server.player.get(i).getPlayerHealth());
 						}
 						playerInfoSent = true;  	
+						waitForTurn = true;
+					}
+					
+					if(waitForTurn) {
+						for(int i = 0; i < 4; i++) {
+							int playerTarget;
+							int damageDealt;
+							playerTarget = in.readInt();
+							damageDealt = in.readInt();
+							Server.player.get(playerTarget).setPlayerHealth(Server.player.get(playerTarget).getPlayerHealth() - damageDealt);
+							Server.writeMessage(Server.player.get(playerTarget).getPlayerName() + "Has taken " + damageDealt + " damage");
+							out.writeInt(Server.player.get(playerTarget).getPlayerHealth());
+							
+						}
 					}
 				}
 			} catch (IOException e) {
