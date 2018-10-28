@@ -1,10 +1,11 @@
 public class Player {
 
+	//This class stores all valuable player information
 	private String playerName;
 	private String playerClass;
 	private int currentHealth;
 	private String playerTeam;
-	private boolean playerReady = false;
+	private boolean playerReady;
 
 	public Player(String playerName, String playerClass, int currentHealth) {
 		this.playerName = playerName;

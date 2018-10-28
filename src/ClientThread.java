@@ -3,6 +3,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+
 class ClientThread implements Runnable {
 
 	private Socket socket; 
@@ -14,6 +15,7 @@ class ClientThread implements Runnable {
 	boolean clientGameStarted;
 	boolean playerInfoSent; 
 
+	//Constructor
 	public ClientThread (Socket socket) {
 		this.socket = socket; 
 	}
@@ -35,9 +37,6 @@ class ClientThread implements Runnable {
 			//Adds that name to a "database"
 			Server.player.add(new Player(playerName, playerClass, playerHealth));
 
-			//Prints out the name if the player that connected as well as send that information to each player
-			Server.writeMessage(Server.player.get(Server.numberOfPlayers-1).getPlayerClass() + " " + 
-					Server.player.get(Server.numberOfPlayers-1).getPlayerName() + " has joined the server");
 			//Gets and prints the joined teams
 			index = in.readInt();
 			playerTeam = in.readLine();
@@ -47,12 +46,14 @@ class ClientThread implements Runnable {
 					" class");
 
 			Server.numberOfPlayersOnTeam++;
-
+			
+			//Read the player's index number and set their status to ready, if received a ready status
 			index = in.readInt();
 			boolean ready = in.readBoolean();
 			Server.player.get(index-1).setPlayerReady(ready);
 			Server.writeMessage(Server.player.get(index-1).getPlayerName() + " is ready");
 
+			//Checks if each players is ready, and if so starts the game
 			try { 
 				if(Server.player.get(0).isPlayerReady() && Server.player.get(1).isPlayerReady() &&
 						Server.player.get(2).isPlayerReady() && Server.player.get(3).isPlayerReady()) {
@@ -66,7 +67,9 @@ class ClientThread implements Runnable {
 
 			}
 
+			
 			while (Server.gameStarted) {
+				//Countdown from 5 before the game actually starts
 				if(!clientGameStarted) {
 					for(int i = 5; i > 0; i-- ) {
 						Server.writeMessage("Game is starting in... " + i);
@@ -77,6 +80,7 @@ class ClientThread implements Runnable {
 					clientGameStarted = true;
 				}
 
+				//Sends player information to each client
 				if(!playerInfoSent) {	
 
 					for(int i = 0; i < 4; i++) {
@@ -87,8 +91,9 @@ class ClientThread implements Runnable {
 					}
 					playerInfoSent = true;  	
 				}
-
 			}
+			
+			//Gets damage information from clients, calculates it and sends information back to the clients
 			String dmgMsg1 = " ";
 			String dmgMsg2 = " ";
 			String dmgMsg3 = " ";
@@ -100,9 +105,10 @@ class ClientThread implements Runnable {
 			index = in.readInt();
 			System.out.println("Index is: " + index);
 			Server.player.get(index-1).setPlayerReady(in.readBoolean());
-			Server.player.get(playerTarget1).setPlayerHealth(Server.player.get(playerTarget1).getPlayerHealth() - damageDealt1);
+			Server.player.get(playerTarget1).setPlayerHealth(Server.player.get(playerTarget1).getPlayerHealth() + damageDealt1);
 			System.out.println("First it");
-
+			
+			//Checks which player sent information, and sets them to ready
 			if(index == 1) {
 				dmgMsg1 = Server.player.get(playerTarget1).getPlayerName() + " has taken " + damageDealt1 + " damage";
 				System.out.println(dmgMsg1);
@@ -121,16 +127,13 @@ class ClientThread implements Runnable {
 				System.out.println("Player 4 is ready?" + Server.player.get(3).isPlayerReady());
 			}
 
-
+			//If everyone is ready, send damage messages to each client
 			if(Server.player.get(0).isPlayerReady() && Server.player.get(1).isPlayerReady() &&
-					Server.player.get(2).isPlayerReady() /*&& Server.player.get(3).isPlayerReady()*/) {
+					Server.player.get(2).isPlayerReady() && Server.player.get(3).isPlayerReady()) {
 				Server.writeMessage(dmgMsg1);
-				System.out.println("msg1 sent!");
 				Server.writeMessage(dmgMsg2);
-				System.out.println("msg2 sent!");
 				Server.writeMessage(dmgMsg3);
-				System.out.println("msg3 sent!");
-				//Server.writeMessage(dmgMsg4);
+				Server.writeMessage(dmgMsg4);
 				for(int i = 0; i < 4; i++) {
 					Server.player.get(i).setPlayerReady(false);
 				}

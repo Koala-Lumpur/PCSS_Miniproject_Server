@@ -7,11 +7,20 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+//*********************************************************************************
+//
+//Project 		: Programming of complex software system mini-project
+//
+//Authors 		: Rasmus Eske Waage Nielsen (Nikoline Erreo Petersen and Nikita Hansen)
+//
+//Date created	: 23/10/2018
+//
+//Purpose		: A server to handle multiple clients joining and send/receive
+//				  to/from the clients
+//
+//*********************************************************************************
+
 public class Server implements Runnable {
-
-
-	public static boolean gameStarted = false;
-
 
 	//ArrayList of sockets which keeps track of the clients connected
 	public static ArrayList<Socket> clients = new ArrayList<Socket>();
@@ -25,14 +34,16 @@ public class Server implements Runnable {
 	public Thread thread;
 	public String threadName;
 	public static int clientNoIndex = 1;
+	public static boolean gameStarted;
 
+	//Constructor
 	public Server(String name) {
 		threadName = name;
 	}
 
 	public static void main(String[] args) {
 
-		//Creates and starts the server, then calls the connect method 
+		//Creates and starts the server, then calls the connect method. Also creates the command thread
 		try {
 			serverSocket = new ServerSocket(8000);
 			System.out.println("Server started at " + new Date() + "\n");
@@ -46,13 +57,15 @@ public class Server implements Runnable {
 			System.err.println(e);
 		}
 	}
-
+	
+	//This thread handles commands, this is always running so you are able to enter commands at any time
 	public void run() {
 		while(true) {
 			CommandSystem.handleCommand(input.nextLine());
 		}
 	}
-
+	
+	//Method creates a new thread
 	public void start() {
 		if(thread == null) {
 			thread = new Thread(this, threadName);
@@ -87,6 +100,7 @@ public class Server implements Runnable {
 		}
 	}
 
+	//Writes an integer to each client
 	public static void sendPlayerInfo(int message) {
 		try {
 			for(int i = 0; i < numberOfPlayers; i++) {
